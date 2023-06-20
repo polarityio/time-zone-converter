@@ -1,0 +1,11 @@
+<span
+  class='integration-summary-tag integration-background-color integration-border-color'
+  {{on 'click' (optional this.scrollToIntegration)}}
+>
+  <span class='acronym integration-text-bold-color'>
+    {{block.acronym}}
+  </span>
+  <span class='integration-text-color'>
+    {{moment-format (get now) 'MM/DD/YYYY HH:mm:ss z' timeZone=timezone}}
+  </span>
+</span>
