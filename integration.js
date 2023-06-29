@@ -1,5 +1,7 @@
 'use strict';
 
+const _ = require('lodash/fp');
+
 function doLookup(entities, options, cb) {
   let lookupResults = [];
 
@@ -7,9 +9,10 @@ function doLookup(entities, options, cb) {
     lookupResults.push({
       entity: entityObj,
       data: {
-        summary: [], // summary is set via custom summary template
+        summary: [`Time: ${entityObj.value}`],
         details: {
-          time: entityObj.value // date is formatted via the template
+          time: entityObj.value,
+          types: entityObj.types
         }
       }
     });

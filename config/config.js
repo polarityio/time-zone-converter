@@ -5,26 +5,31 @@ module.exports = {
   description: 'Converts timestamps into any Time Zone',
   customTypes: [
     {
-      key: 'ISO8601TimestampWithTimeZone',
-      regex: /\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(?:[+-]\d{2}:\d{2}|Z?)/
+      key: 'ISO-Timezone',
+      regex: /\d{4}-\d{2}-\d{2}\sT\s\d{2}:\d{2}\s*[A-Z]{3,4}/
+    },
+    {
+      key: 'ISO-8601',
+      regex: /(\d{4})(-\d{2}){2}T(\d{2}:){2}\d{2}(Z?)/
     },
     {
       key: 'UnixTimestamp',
       regex: /\b\d{10}(?!\w)/
     },
     {
-      key: 'RFC3339InternetTimestamp',
-      regex: /\d{4}-\d{2}-\d{2}[ T]\d{2}:\d{2}:\d{2}Z/
+      key: 'RFC-3339',
+      regex: /(\d{4})(-\d{2}){2} (\d{2}:){2}\d{2}(Z?)/
     },
     {
       key: 'WaybackMachineMementoTimestamp',
-      regex: /\d{14}[a]/
+      regex: /\d{14}\[a]/
     },
     {
       key: 'NanosecondsSinceBoot',
       regex: /\d+(?:[ ][n][s])/
     }
   ],
+  styles: ['./styles/styles.less'],
   block: {
     component: {
       file: './components/block.js'

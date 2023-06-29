@@ -1,0 +1,29 @@
+{
+  "name": "Time Zone Converter",
+  "acronym": "TZONE",
+  "defaultColor": "light-gray",
+  "description": "Converts timestamps into any Time Zone",
+  "customTypes": [
+    { "key": "ISO-Timezone", "regex": {} },
+    { "key": "ISO-8601", "regex": {} },
+    { "key": "UnixTimestamp", "regex": {} },
+    { "key": "RFC-3339", "regex": {} },
+    { "key": "WaybackMachineMementoTimestamp", "regex": {} },
+    { "key": "NanosecondsSinceBoot", "regex": {} }
+  ],
+  "block": { "component": { "file": "./components/block.js" }, "template": { "file": "./templates/block.hbs" } },
+  "summary": { "component": { "file": "./components/summary.js" }, "template": { "file": "./templates/summary.hbs" } },
+  "request": { "cert": "", "key": "", "passphrase": "", "ca": "", "proxy": "", "rejectUnauthorized": true },
+  "logging": { "level": "trace" },
+  "options": [
+    {
+      "key": "showSummaryInLocalTimezone",
+      "name": "Show Time in Your Local Timezone",
+      "description": "If checked, the integration will display the time in your local timezone as a summary tag.  The default is to display the time in UTC",
+      "default": false,
+      "type": "boolean",
+      "userCanEdit": true,
+      "adminOnly": false
+    }
+  ]
+}
