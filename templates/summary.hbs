@@ -6,23 +6,11 @@
     {{block.acronym}}
   </span>
   <span class='integration-text-color'>
-    {{#if (eq type 'custom.ISO-Timezone')}}
-      {{moment-format details.time 'MM/DD/YYYY HH:mm:ss z' timeZone=timezone}}
-    {{/if}}
-    {{#if (eq type 'custom.ISO-8601')}}
-      {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone}}
-    {{/if}}
-    {{#if (eq type 'custom.RFC-3339')}}
-      {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone}}
-    {{/if}}
-    {{#if (eq type 'custom.WaybackMachineMementoTimestamp')}}
-      {{moment-format details.time 'YYYYMMDDHHmmss' timeZone=timezone}}
-    {{/if}}
+    {{log type}}
     {{#if (eq type 'custom.NanosecondsSinceBoot')}}
-      {{moment-format nanoTime 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone}}
-    {{/if}}
-    {{#if (eq type 'custom.UnixTimestamp')}}
-      {{moment-format (unix details.time) 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone}}
+      {{nanosecondsFormatted}}
+    {{else}}
+      {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=userTimezone}}
     {{/if}}
   </span>
 </span>

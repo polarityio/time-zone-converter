@@ -11,11 +11,18 @@ polarity.export = PolarityComponent.extend({
     return typeFormatted;
   }),
   time: Ember.computed.alias('details.time'),
-
   userTimezone: Ember.computed('Intl', function () {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }),
-
+  bootTime: Ember.computed('details.time', function () {
+    const type = this.get('type');
+    if (type === 'custom.NanosecondsSinceBoot') {
+      const bootTime = new Date(new Date().getTime() - parseInt(this.get('details.time'), 10) / 1000000);
+      return bootTime.toISOString();
+    } else {
+      return 'N/A';
+    }
+  }),
   timezoneList: [
     { name: 'International Date Line West', abbreviation: 'IDLW', value: 'Etc/GMT+12' },
     { name: 'Nome Time', abbreviation: 'NT', value: 'America/Nome' },

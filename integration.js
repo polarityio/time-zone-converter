@@ -1,19 +1,17 @@
 'use strict';
-
+const createDetails = require('./src/createDetails');
 const _ = require('lodash/fp');
+const { setLogger } = require('./src/logger');
 
 function doLookup(entities, options, cb) {
   let lookupResults = [];
 
-  entities.forEach((entityObj) => {
+  entities.forEach((entity) => {
     lookupResults.push({
-      entity: entityObj,
+      entity,
       data: {
-        summary: [`Time: ${entityObj.value}`],
-        details: {
-          time: entityObj.value,
-          types: entityObj.types
-        }
+        summary: [''],
+        details: createDetails(entity, options)
       }
     });
   });
@@ -22,5 +20,6 @@ function doLookup(entities, options, cb) {
 }
 
 module.exports = {
+  startup: setLogger,
   doLookup: doLookup
 };
