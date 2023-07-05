@@ -1,34 +1,56 @@
-<table style='border-collapse: collapse; border: none; table-layout: fixed; width: auto;'>
+<table class='timezone-table'>
   <tr>
-    <th style='text-align: left; padding-right: 10px;'>
+    <th>
       {{typeFormatted}}:
     </th>
   </tr>
   {{#if (eq type 'custom.NanosecondsSinceBoot')}}
     <tr>
-      <td style='text-align: left; padding-right: 10px;'>
+      <td class='timezone-key'>
         Boot Time:
       </td>
-      <td style='text-align: left; overflow-wrap: break-word;'>
-        {{log bootTime}}
-        {{moment-format bootTime 'YYYY-MM-DD HH:mm:ss z' timeZone=userTimezone}}
+      <td class='timezone-value'>
+        <button
+          class='copy-btn'
+          title='Copy to Clipboard'
+          {{action 'copyData' (concat 'time-info-nano-' uniqueIdPrefix)}}
+        >
+          <div id={{concat 'time-info-nano-' uniqueIdPrefix}}>
+            {{moment-format bootTime 'YYYY-MM-DD HH:mm:ss z' timeZone=userTimezone}}
+          </div>
+        </button>
+      </td>
+    </tr>
+    <tr>
+      <td class='timezone-key'>
+        Time Since Boot:
+      </td>
+      <td class='timezone-value'>
+        {{nanosecondsFormatted}}
       </td>
     </tr>
   {{else}}
     {{#each timezoneList as |timezone|}}
       <tr>
-        <td style='text-align: left; padding-right: 10px;'>
+        <td class='timezone-key'>
           {{timezone.name}}:
         </td>
-        <td style='text-align: left; overflow-wrap: break-word;'>
-          {{#if (eq userTimezone timezone.value)}}
-            <span style='font-weight: bold;'>
-              {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
-            </span>
-          {{/if}}
-          {{#if (not (eq userTimezone timezone.value))}}
-            {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
-          {{/if}}
+        <td class='timezone-value'>
+          <button
+            class='copy-btn'
+            title='Copy to Clipboard'
+            {{action 'copyData' (concat 'time-info-' timezone.abbreviation '-' uniqueIdPrefix)}}
+          >
+            <div id={{concat 'time-info-' timezone.abbreviation '-' uniqueIdPrefix}}>
+              {{#if (eq userTimezone timezone.value)}}
+                <span style='font-weight: bold;'>
+                  {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
+                </span>
+              {{else}}
+                {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
+              {{/if}}
+            </div>
+          </button>
         </td>
       </tr>
     {{/each}}

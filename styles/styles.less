@@ -1,9 +1,36 @@
-@integration-text-color: #000000;
-
-.integration-text-color {
-  color: @integration-text-color;
+.timezone-table {
+  border-collapse: collapse;
+  border: none;
+  table-layout: fixed;
+  width: auto;
 }
 
-.bold {
-  font-weight: bold;
+th {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.timezone-key {
+  text-align: left;
+  padding-right: 10px;
+}
+
+.timezone-value {
+  text-align: left;
+  overflow-wrap: break-word;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  padding: 3px;
+  border-radius: 2px;
+  cursor: copy;
+  color: black;
+  font-size: 1em;
+  text-align: left;
+
+  &:hover {
+    background: lightgray;
+  }
 }

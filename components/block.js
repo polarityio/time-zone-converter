@@ -23,6 +23,37 @@ polarity.export = PolarityComponent.extend({
       return 'N/A';
     }
   }),
+  nanosecondsFormatted: Ember.computed('details.time', function () {
+    return this.getNanosecondsSinceBoot(this.get('details.time'));
+  }),
+  getNanosecondsSinceBoot: function (nanosecondsString) {
+    let nanoseconds = parseInt(nanosecondsString, 10);
+    const milliseconds = nanoseconds / 1000000;
+    const seconds = milliseconds / 1000;
+    const minutes = seconds / 60;
+    const hours = minutes / 60;
+    const days = hours / 24;
+
+    if (days >= 2) {
+      // If more than 2 days, use days
+      return `${Math.round(days)} days ago`;
+    } else if (hours >= 1) {
+      // If more than 1 hours, use hours
+      return `${Math.round(hours)} hours ago, ${Math.round(minutes % 60)} minutes ago`;
+    } else if (minutes >= 1) {
+      // If more than 1 minute, use minutes
+      return `${Math.round(minutes)} minutes ago, ${Math.round(seconds % 60)} seconds ago`;
+    } else if (seconds >= 1) {
+      // If more than 1 second, use seconds
+      return `${Math.round(seconds)} seconds ago, ${Math.round(milliseconds % 1000)} milliseconds ago`;
+    } else if (milliseconds >= 1) {
+      // If more than 1 millisecond, use milliseconds
+      return `${Math.round(milliseconds)} milliseconds ago`;
+    } else {
+      // If less than 1 millisecond, use nanoseconds
+      return `${Math.round(nanoseconds)} nanoseconds ago`;
+    }
+  },
   timezoneList: [
     { name: 'International Date Line West', abbreviation: 'IDLW', value: 'Etc/GMT+12' },
     { name: 'Nome Time', abbreviation: 'NT', value: 'America/Nome' },
@@ -44,5 +75,42 @@ polarity.export = PolarityComponent.extend({
     { name: 'Japan Standard Time', abbreviation: 'JST', value: 'Asia/Tokyo' },
     { name: 'Australian Eastern Standard Time', abbreviation: 'AEST', value: 'Australia/Sydney' },
     { name: 'Australian Western Standard Time', abbreviation: 'AWST', value: 'Australia/Perth' }
-  ]
+  ],
+  uniqueIdPrefix: '',
+  showCopyMessage: false,
+  init() {
+    let array = new Uint32Array(5);
+    this.set('uniqueIdPrefix', window.crypto.getRandomValues(array).join(''));
+
+    this._super(...arguments);
+  },
+  actions: {
+    copyData: function (elementId) {
+      Ember.run.scheduleOnce('afterRender', this, this.copyElementToClipboard, elementId);
+
+      Ember.run.scheduleOnce('destroy', this, this.restoreCopyState);
+    }
+  },
+  copyElementToClipboard(element) {
+    const text = typeof element === 'string' ? document.getElementById(element).innerText : element.innerText;
+
+    navigator.clipboard
+      .writeText(text)
+      .then(() => {
+        console.log('Text copied to clipboard');
+      })
+      .catch((err) => {
+        console.log('Error in copying text: ', err);
+      });
+  },
+
+  restoreCopyState() {
+    this.set('showCopyMessage', true);
+
+    setTimeout(() => {
+      if (!this.isDestroyed) {
+        this.set('showCopyMessage', false);
+      }
+    }, 2000);
+  }
 });
