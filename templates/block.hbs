@@ -31,6 +31,7 @@
     </tr>
   {{else}}
     {{#each timezoneList as |timezone|}}
+      {{log details.time}}
       <tr>
         <td class='timezone-key'>
           {{timezone.name}}:

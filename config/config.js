@@ -10,7 +10,7 @@ module.exports = {
     },
     {
       key: 'ISO-8601',
-      regex: /(\d{4})(-\d{2}){2}T(\d{2}:){2}\d{2}(Z?)/
+      regex: /(\d{4})(-\d{2}){2}T(\d{2}:){2}\d{2}(\.\d{2})?(Z?)([\+\-]{1}\d{2}:\d{2})?/
     },
     {
       key: 'UnixTimestamp',
@@ -18,7 +18,7 @@ module.exports = {
     },
     {
       key: 'RFC-3339',
-      regex: /(\d{4})(-\d{2}){2} (\d{2}:){2}\d{2}(Z?)/
+      regex: /(\d{4})(-\d{2}){2} (\d{2}:){2}\d{2}(\.\d{2})?(Z?)([\+\-]{1}\d{2}:\d{2})?/
     },
     {
       key: 'WaybackMachineMementoTimestamp',
@@ -51,13 +51,14 @@ module.exports = {
     key: '',
     passphrase: '',
     ca: '',
-    proxy: ""
+    proxy: ''
   },
   logging: {
     level: 'trace' //trace, debug, info, warn, error, fatal
   },
   options: [
     {
+      //TODO: Remove
       key: 'showSummaryInLocalTimezone',
       name: 'Show Time in Your Local Timezone',
       description:
@@ -66,6 +67,8 @@ module.exports = {
       type: 'boolean',
       userCanEdit: true,
       adminOnly: false
+      //TODO: Add an option for the desired format ie 'yyyy-MM-dd HH:mm:ss'
+      //TODO: Would need validation to ensure the format is valid
     }
   ]
 };

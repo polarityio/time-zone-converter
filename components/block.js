@@ -1,16 +1,27 @@
 'use strict';
 
 polarity.export = PolarityComponent.extend({
+  uniqueIdPrefix: '',
+  showCopyMessage: false,
+  init() {
+    let array = new Uint32Array(5);
+    this.set('uniqueIdPrefix', window.crypto.getRandomValues(array).join(''));
+
+    this._super(...arguments);
+  },
   details: Ember.computed.alias('block.data.details'),
   type: Ember.computed('block.entity.types', function () {
     return this.get('block.entity.types')[0];
+  }),
+  time: Ember.computed.alias('details.time'),
+  nanosecondsFormatted: Ember.computed('details.time', function () {
+    return this.getNanosecondsSinceBoot(this.get('details.time'));
   }),
   typeFormatted: Ember.computed('type', function () {
     const type = this.get('type');
     const typeFormatted = type.replace('custom.', '');
     return typeFormatted;
   }),
-  time: Ember.computed.alias('details.time'),
   userTimezone: Ember.computed('Intl', function () {
     return Intl.DateTimeFormat().resolvedOptions().timeZone;
   }),
@@ -22,9 +33,6 @@ polarity.export = PolarityComponent.extend({
     } else {
       return 'N/A';
     }
-  }),
-  nanosecondsFormatted: Ember.computed('details.time', function () {
-    return this.getNanosecondsSinceBoot(this.get('details.time'));
   }),
   getNanosecondsSinceBoot: function (nanosecondsString) {
     let nanoseconds = parseInt(nanosecondsString, 10);
@@ -76,14 +84,6 @@ polarity.export = PolarityComponent.extend({
     { name: 'Australian Eastern Standard Time', abbreviation: 'AEST', value: 'Australia/Sydney' },
     { name: 'Australian Western Standard Time', abbreviation: 'AWST', value: 'Australia/Perth' }
   ],
-  uniqueIdPrefix: '',
-  showCopyMessage: false,
-  init() {
-    let array = new Uint32Array(5);
-    this.set('uniqueIdPrefix', window.crypto.getRandomValues(array).join(''));
-
-    this._super(...arguments);
-  },
   actions: {
     copyData: function (elementId) {
       Ember.run.scheduleOnce('afterRender', this, this.copyElementToClipboard, elementId);
