@@ -1,4 +1,5 @@
 module.exports = {
+  polarityIntegrationUuid: 'be38e230-2185-11ee-afee-2db2d0482452',
   name: 'Time Zone Converter',
   acronym: 'TZONE',
   defaultColor: 'light-gray',
