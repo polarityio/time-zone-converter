@@ -1,9 +1,12 @@
 <table class='timezone-table'>
-  <tr>
-    <th>
-      {{typeFormatted}}:
-    </th>
-  </tr>
+  {{log details}}
+  {{#if (gt details.length 0)}}
+    <tr>
+      <th>
+        {{typeFormatted}}:
+      </th>
+    </tr>
+  {{/if}}
   {{#if (eq type 'custom.NanosecondsSinceBoot')}}
     <tr>
       <td class='timezone-key'>
@@ -16,7 +19,7 @@
           {{action 'copyData' (concat 'time-info-nano-' uniqueIdPrefix)}}
         >
           <div id={{concat 'time-info-nano-' uniqueIdPrefix}}>
-            {{moment-format bootTime 'YYYY-MM-DD HH:mm:ss z' timeZone=userTimezone}}
+            {{time}}
           </div>
         </button>
       </td>
@@ -26,34 +29,34 @@
         Time Since Boot:
       </td>
       <td class='timezone-value'>
-        {{nanosecondsFormatted}}
+        {{nanoseconds}}
       </td>
     </tr>
   {{else}}
-    {{#each timezoneList as |timezone|}}
-      {{log details.time}}
-      <tr>
-        <td class='timezone-key'>
-          {{timezone.name}}:
-        </td>
-        <td class='timezone-value'>
-          <button
-            class='copy-btn'
-            title='Copy to Clipboard'
-            {{action 'copyData' (concat 'time-info-' timezone.abbreviation '-' uniqueIdPrefix)}}
-          >
-            <div id={{concat 'time-info-' timezone.abbreviation '-' uniqueIdPrefix}}>
-              {{#if (eq userTimezone timezone.value)}}
-                <span style='font-weight: bold;'>
-                  {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
-                </span>
-              {{else}}
-                {{moment-format details.time 'YYYY-MM-DD HH:mm:ss z' timeZone=timezone.value}}
-              {{/if}}
-            </div>
-          </button>
-        </td>
-      </tr>
-    {{/each}}
+    {{#with details as |timezones|}}
+      {{#each timezones as |timezone|}}
+        {{log timezone.time}}
+        <tr>
+          <td class='timezone-key'>
+            {{timezone.timezoneLabel}}:
+          </td>
+          <td class='timezone-value'>
+            <button
+              class='copy-btn'
+              title='Copy to Clipboard'
+              {{action
+                'copyData'
+                (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)
+              }}
+            >
+              <div id={{concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix}}>
+                {{timezone.time}}
+              </div>
+            </button>
+          </td>
+        </tr>
+      {{/each}}
+    {{/with}}
+    {{! TODO: Message that no details are selected }}
   {{/if}}
 </table>

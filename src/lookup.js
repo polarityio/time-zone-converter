@@ -1,8 +1,4 @@
-const { TIMEZONES } = require('./constants');
-const { DateTime } = require('luxon');
-
 const { getLogger } = require('./logger');
-const { parseInt } = require('lodash/fp');
 
 const { parseWaybackMachineMemento } = require('./parsers/parseWaybackMachineMemento');
 const { parseUnix } = require('./parsers/parseUnix');
@@ -20,12 +16,14 @@ const TYPE_BY_DATE_FORMAT_FUNC = {
   'custom.NanosecondsSinceBoot': parseNanosecondsSinceBoot
 };
 
-const createDetails = (entity, options) => {
+const createTimezonesFromOptions = (entity, options, useDetails) => {
   const logger = getLogger();
-  let { value, displayValue } = entity;
+  let { value } = entity;
   const type = entity.types[0];
 
-  return TYPE_BY_DATE_FORMAT_FUNC[type](value);
+  return TYPE_BY_DATE_FORMAT_FUNC[type](value, options, useDetails);
 };
 
-module.exports = createDetails;
+module.exports = {
+  createTimezonesFromOptions
+};

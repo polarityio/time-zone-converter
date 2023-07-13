@@ -1,7 +1,8 @@
 'use strict';
-const createDetails = require('./src/createDetails');
+const { createTimezonesFromOptions } = require('./src/lookup');
 const _ = require('lodash/fp');
 const { setLogger } = require('./src/logger');
+const { validateOptions } = require('./src/validateOptions');
 
 function doLookup(entities, options, cb) {
   let lookupResults = [];
@@ -10,8 +11,8 @@ function doLookup(entities, options, cb) {
     lookupResults.push({
       entity,
       data: {
-        summary: [''],
-        details: createDetails(entity, options)
+        summary: createTimezonesFromOptions(entity, options, false),
+        details: createTimezonesFromOptions(entity, options, true)
       }
     });
   });
@@ -21,5 +22,11 @@ function doLookup(entities, options, cb) {
 
 module.exports = {
   startup: setLogger,
-  doLookup: doLookup
+  doLookup,
+  validateOptions
 };
+
+/**
+ * TODO: Option validation
+ * require some detail OR Summary tag timezone
+ */

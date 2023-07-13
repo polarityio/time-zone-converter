@@ -38,14 +38,6 @@ module.exports = {
       file: './templates/block.hbs'
     }
   },
-  summary: {
-    component: {
-      file: './components/summary.js'
-    },
-    template: {
-      file: './templates/summary.hbs'
-    }
-  },
   request: {
     cert: '',
     key: '',
@@ -58,17 +50,107 @@ module.exports = {
   },
   options: [
     {
-      //TODO: Remove
-      key: 'showSummaryInLocalTimezone',
-      name: 'Show Time in Your Local Timezone',
+      key: 'dateFormatString',
+      name: 'Date Format String',
       description:
-        'If checked, the integration will display the time in your local timezone as a summary tag.  The default is to display the time in UTC',
-      default: false,
-      type: 'boolean',
+        'The format string to use when displaying the date. See https://moment.github.io/luxon/#/formatting?id=table-of-tokens for more details.',
+      default: 'yyyy-MM-dd HH:mm:ss ZZZZ',
+      type: 'text',
       userCanEdit: true,
       adminOnly: false
-      //TODO: Add an option for the desired format ie 'yyyy-MM-dd HH:mm:ss'
-      //TODO: Would need validation to ensure the format is valid
+    },
+    {
+      key: 'summaryTagTimeZones',
+      name: 'Summary Tag Timezones',
+      description: 'The timezones to display in the summary tag. (Default: EST)',
+      default: [
+        {
+          value: 'America/New_York',
+          display: 'Eastern Standard Time (EST)'
+        }
+      ],
+      type: 'select',
+      options: [
+        { display: 'International Date Line West (IDLW)', value: 'Etc/GMT+12' },
+        { display: 'Nome Time (NT)', value: 'America/Nome' },
+        { display: 'Hawaii-Aleutian Standard Time (HST)', value: 'Pacific/Honolulu' },
+        { display: 'Alaska Standard Time (AKST)', value: 'America/Anchorage' },
+        { display: 'Pacific Standard Time (PST)', value: 'America/Los_Angeles' },
+        { display: 'Mountain Standard Time (MST)', value: 'America/Denver' },
+        { display: 'Central Standard Time (CST)', value: 'America/Chicago' },
+        { display: 'Eastern Standard Time (EST)', value: 'America/New_York' },
+        { display: 'Atlantic Standard Time (AST)', value: 'America/Halifax' },
+        { display: 'Newfoundland Standard Time (NST)', value: 'America/St_Johns' },
+        { display: 'Greenwich Mean Time (GMT)', value: 'Etc/GMT' },
+        { display: 'Central European Time (CET)', value: 'Europe/Paris' },
+        { display: 'Eastern European Time (EET)', value: 'Europe/Athens' },
+        { display: 'Moscow Standard Time (MSK)', value: 'Europe/Moscow' },
+        { display: 'India Standard Time (IST)', value: 'Asia/Kolkata' },
+        { display: 'Western Indonesian Time (WIB)', value: 'Asia/Jakarta' },
+        { display: 'Hong Kong Time (HKT)', value: 'Asia/Hong_Kong' },
+        { display: 'Japan Standard Time (JST)', value: 'Asia/Tokyo' },
+        { display: 'Australian Eastern Standard Time (AEST)', value: 'Australia/Sydney' },
+        { display: 'Australian Western Standard Time (AWST)', value: 'Australia/Perth' },
+        { display: 'UTC (UTC)', value: 'UTC' }
+      ],
+      multiple: true,
+      userCanEdit: true,
+      adminOnly: false
+    },
+    {
+      key: 'detailsTimeZones',
+      name: 'Details Time Zones',
+      description: 'The timezones to display in the details section. (Default: ALL).',
+      default: [
+        { display: 'International Date Line West (IDLW)', value: 'Etc/GMT+12' },
+        { display: 'Nome Time (NT)', value: 'America/Nome' },
+        { display: 'Hawaii-Aleutian Standard Time (HST)', value: 'Pacific/Honolulu' },
+        { display: 'Alaska Standard Time (AKST)', value: 'America/Anchorage' },
+        { display: 'Pacific Standard Time (PST)', value: 'America/Los_Angeles' },
+        { display: 'Mountain Standard Time (MST)', value: 'America/Denver' },
+        { display: 'Central Standard Time (CST)', value: 'America/Chicago' },
+        { display: 'Eastern Standard Time (EST)', value: 'America/New_York' },
+        { display: 'Atlantic Standard Time (AST)', value: 'America/Halifax' },
+        { display: 'Newfoundland Standard Time (NST)', value: 'America/St_Johns' },
+        { display: 'Greenwich Mean Time (GMT)', value: 'Etc/GMT' },
+        { display: 'Central European Time (CET)', value: 'Europe/Paris' },
+        { display: 'Eastern European Time (EET)', value: 'Europe/Athens' },
+        { display: 'Moscow Standard Time (MSK)', value: 'Europe/Moscow' },
+        { display: 'India Standard Time (IST)', value: 'Asia/Kolkata' },
+        { display: 'Western Indonesian Time (WIB)', value: 'Asia/Jakarta' },
+        { display: 'Hong Kong Time (HKT)', value: 'Asia/Hong_Kong' },
+        { display: 'Japan Standard Time (JST)', value: 'Asia/Tokyo' },
+        { display: 'Australian Eastern Standard Time (AEST)', value: 'Australia/Sydney' },
+        { display: 'Australian Western Standard Time (AWST)', value: 'Australia/Perth' },
+        { display: 'UTC (UTC)', value: 'UTC' }
+      ],
+      type: 'select',
+      options: [
+        { display: 'International Date Line West (IDLW)', value: 'Etc/GMT+12' },
+        { display: 'Nome Time (NT)', value: 'America/Nome' },
+        { display: 'Hawaii-Aleutian Standard Time (HST)', value: 'Pacific/Honolulu' },
+        { display: 'Alaska Standard Time (AKST)', value: 'America/Anchorage' },
+        { display: 'Pacific Standard Time (PST)', value: 'America/Los_Angeles' },
+        { display: 'Mountain Standard Time (MST)', value: 'America/Denver' },
+        { display: 'Central Standard Time (CST)', value: 'America/Chicago' },
+        { display: 'Eastern Standard Time (EST)', value: 'America/New_York' },
+        { display: 'Atlantic Standard Time (AST)', value: 'America/Halifax' },
+        { display: 'Newfoundland Standard Time (NST)', value: 'America/St_Johns' },
+        { display: 'Greenwich Mean Time (GMT)', value: 'Etc/GMT' },
+        { display: 'Central European Time (CET)', value: 'Europe/Paris' },
+        { display: 'Eastern European Time (EET)', value: 'Europe/Athens' },
+        { display: 'Moscow Standard Time (MSK)', value: 'Europe/Moscow' },
+        { display: 'India Standard Time (IST)', value: 'Asia/Kolkata' },
+        { display: 'Western Indonesian Time (WIB)', value: 'Asia/Jakarta' },
+        { display: 'Hong Kong Time (HKT)', value: 'Asia/Hong_Kong' },
+        { display: 'Japan Standard Time (JST)', value: 'Asia/Tokyo' },
+        { display: 'Australian Eastern Standard Time (AEST)', value: 'Australia/Sydney' },
+        { display: 'Australian Western Standard Time (AWST)', value: 'Australia/Perth' },
+        { display: 'UTC (UTC)', value: 'UTC' }
+      ],
+      multiple: true,
+      userCanEdit: true,
+      adminOnly: false
     }
   ]
 };
