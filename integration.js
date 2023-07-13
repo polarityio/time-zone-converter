@@ -25,8 +25,3 @@ module.exports = {
   doLookup,
   validateOptions
 };
-
-/**
- * TODO: Option validation
- * require some detail OR Summary tag timezone
- */
