@@ -16,28 +16,15 @@
     "component": { "file": "./components/block.js" },
     "template": { "file": "./templates/block.hbs" }
   },
-  "summary": {
-    "component": { "file": "./components/summary.js" },
-    "template": { "file": "./templates/summary.hbs" }
-  },
   "request": { "cert": "", "key": "", "passphrase": "", "ca": "", "proxy": "" },
-  "logging": { "level": "trace" },
+  "logging": { "level": "info" },
   "options": [
-    {
-      "key": "showSummaryInLocalTimezone",
-      "name": "Show Time in Your Local Timezone",
-      "description": "If checked, the integration will display the time in your local timezone as a summary tag.  The default is to display the time in UTC",
-      "default": false,
-      "type": "boolean",
-      "userCanEdit": true,
-      "adminOnly": false
-    },
     {
       "key": "dateFormatString",
       "name": "Date Format String",
       "description": "The format string to use when displaying the date. See https://moment.github.io/luxon/#/formatting?id=table-of-tokens for more details.",
       "default": "yyyy-MM-dd HH:mm:ss ZZZZ",
-      "type": "string",
+      "type": "text",
       "userCanEdit": true,
       "adminOnly": false
     },
