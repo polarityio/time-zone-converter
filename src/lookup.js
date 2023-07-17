@@ -1,11 +1,11 @@
-const { getLogger } = require('./logger');
-
-const { parseWaybackMachineMemento } = require('./parsers/parseWaybackMachineMemento');
-const { parseUnix } = require('./parsers/parseUnix');
-const { parseISOTimezone } = require('./parsers/parseISOTimezone');
-const { parseISO8601 } = require('./parsers/parseISO8601');
-const { parseRFC3339 } = require('./parsers/parseRFC3339');
-const { parseNanosecondsSinceBoot } = require('./parsers/parseNanosecondsSinceBoot');
+const {
+  parseWaybackMachineMemento,
+  parseUnix,
+  parseISOTimezone,
+  parseISO8601,
+  parseRFC3339,
+  parseNanosecondsSinceBoot
+} = require('./parsers');
 
 const TYPE_BY_DATE_FORMAT_FUNC = {
   'custom.WaybackMachineMementoTimestamp': parseWaybackMachineMemento,
@@ -17,11 +17,9 @@ const TYPE_BY_DATE_FORMAT_FUNC = {
 };
 
 const createTimezonesFromOptions = (entity, options, useDetails) => {
-  const logger = getLogger();
-  let { value } = entity;
   const type = entity.types[0];
 
-  return TYPE_BY_DATE_FORMAT_FUNC[type](value, options, useDetails);
+  return TYPE_BY_DATE_FORMAT_FUNC[type](entity.value, options, useDetails);
 };
 
 module.exports = {

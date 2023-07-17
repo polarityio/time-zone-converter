@@ -1,4 +1,3 @@
-const { DateTime } = require('luxon');
 const { map, parseInt } = require('lodash/fp');
 
 const checkSecondsRegex = /\d{2}:\d{2}:\d{2}$/;

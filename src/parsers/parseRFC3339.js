@@ -1,5 +1,5 @@
 const { DateTime } = require('luxon');
-const { getTimeZonesForThisDateTime } = require('./utils');
+const { checkSecondsRegex, getTimeZonesForThisDateTime } = require('./utils');
 
 const parseRFC3339 = (value, options, isDetailed) => {
   let formattedTime;
@@ -12,7 +12,6 @@ const parseRFC3339 = (value, options, isDetailed) => {
     value = value.substring(0, value.length - 1);
   }
 
-  const checkSecondsRegex = /\d{2}:\d{2}:\d{2}$/;
   const formatString = `yyyy-MM-dd HH:mm${checkSecondsRegex.test(value) ? ':ss' : ''}`;
 
   formattedTime = DateTime.fromFormat(value, formatString, { zone: 'utc' });

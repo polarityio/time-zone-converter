@@ -10,14 +10,14 @@ th {
   padding-right: 10px;
 }
 
-.timezone-key {
+td.timezone-value,
+td.timezone-key {
   text-align: left;
-  padding-right: 10px;
-}
+  word-wrap: break-word;
+  word-break: break-word;
 
-.timezone-value {
-  text-align: left;
   overflow-wrap: break-word;
+  padding: 0;
 }
 
 .copy-btn {
@@ -31,6 +31,14 @@ th {
   text-align: left;
 
   &:hover {
-    background: lightgray;
+    background: #e7e7e7;
   }
+  &:active {
+    background: #cfcfcf;
+  }
+}
+
+svg.copied-icon {
+  font-size: 12px;
+  color: #919191;
 }

@@ -1,4 +1,4 @@
-<table class='timezone-table'>
+<table class="timezone-table">
   {{log details}}
   {{#if (gt details.length 0)}}
     <tr>
@@ -7,28 +7,31 @@
       </th>
     </tr>
   {{/if}}
-  {{#if (eq type 'custom.NanosecondsSinceBoot')}}
+  {{#if (eq type "custom.NanosecondsSinceBoot")}}
     <tr>
-      <td class='timezone-key'>
+      <td class="timezone-key">
         Boot Time:
       </td>
-      <td class='timezone-value'>
+      <td class="timezone-value">
         <button
-          class='copy-btn'
-          title='Copy to Clipboard'
-          {{action 'copyData' (concat 'time-info-nano-' uniqueIdPrefix)}}
+          class="copy-btn"
+          title="Copy to Clipboard"
+          {{action "copyData" (concat "time-info-nano-" uniqueIdPrefix)}}
         >
-          <div id={{concat 'time-info-nano-' uniqueIdPrefix}}>
+          <div id={{concat "time-info-nano-" uniqueIdPrefix}}>
             {{time}}
           </div>
         </button>
+        {{#if (get showCopySuccessCheck (concat "time-info-nano-" uniqueIdPrefix))}}
+          {{fa-icon icon="check" class="copied-icon" fixedWidth=true}}
+        {{/if}}
       </td>
     </tr>
     <tr>
-      <td class='timezone-key'>
+      <td class="timezone-key">
         Time Since Boot:
       </td>
-      <td class='timezone-value'>
+      <td class="timezone-value">
         {{nanoseconds}}
       </td>
     </tr>
@@ -37,22 +40,25 @@
       {{#each timezones as |timezone|}}
         {{log timezone.time}}
         <tr>
-          <td class='timezone-key'>
+          <td class="timezone-key">
             {{timezone.timezoneLabel}}:
           </td>
-          <td class='timezone-value'>
+          <td class="timezone-value">
             <button
-              class='copy-btn'
-              title='Copy to Clipboard'
+              class="copy-btn"
+              title="Copy to Clipboard"
               {{action
-                'copyData'
-                (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)
+                "copyData"
+                (concat "time-info-" timezone.timezoneLabel "-" uniqueIdPrefix)
               }}
             >
-              <div id={{concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix}}>
+              <div id={{concat "time-info-" timezone.timezoneLabel "-" uniqueIdPrefix}}>
                 {{timezone.time}}
               </div>
             </button>
+            {{#if (get showCopySuccessCheck (concat "time-info-" timezone.timezoneLabel "-" uniqueIdPrefix))}}
+              {{fa-icon icon="check" class="copied-icon" fixedWidth=true}}
+            {{/if}}
           </td>
         </tr>
       {{/each}}

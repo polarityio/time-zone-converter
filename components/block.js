@@ -27,6 +27,7 @@ polarity.export = PolarityComponent.extend({
       Ember.run.scheduleOnce('destroy', this, this.restoreCopyState);
     }
   },
+  showCopySuccessCheck: {},
   copyElementToClipboard(element) {
     const text =
       typeof element === 'string'
@@ -36,10 +37,15 @@ polarity.export = PolarityComponent.extend({
     navigator.clipboard
       .writeText(text)
       .then(() => {
+        this.set(`showCopySuccessCheck.${element}`, true);
         console.log('Text copied to clipboard');
       })
       .catch((err) => {
         console.log('Error in copying text: ', err);
+      }).finally(() => {
+        setTimeout(() => {
+          this.set(`showCopySuccessCheck.${element}`, false);
+        }, 2000);
       });
   },
 

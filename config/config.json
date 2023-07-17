@@ -4,6 +4,7 @@
   "acronym": "TZONE",
   "defaultColor": "light-gray",
   "description": "Converts timestamps into any Time Zone",
+  "entityTypes": [],
   "customTypes": [
     { "key": "ISO-Timezone", "regex": {} },
     { "key": "ISO-8601", "regex": {} },

@@ -1,6 +1,5 @@
 'use strict';
 const { createTimezonesFromOptions } = require('./src/lookup');
-const _ = require('lodash/fp');
 const { setLogger } = require('./src/logger');
 const { validateOptions } = require('./src/validateOptions');
 
