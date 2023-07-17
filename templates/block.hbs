@@ -6,6 +6,12 @@
         {{typeFormatted}}:
       </th>
     </tr>
+  {{else}}
+    <tr>
+      <th>
+        No Timezones Selected.
+      </th>
+    </tr>
   {{/if}}
   {{#if (eq type "custom.NanosecondsSinceBoot")}}
     <tr>
