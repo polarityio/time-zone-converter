@@ -19,7 +19,8 @@ module.exports = {
     },
     {
       key: 'RFC-3339',
-      regex: /(\d{4})(-\d{2}){2} (\d{2}:){2}\d{2}(\.\d{2})?(Z?)([\+\-]{1}\d{2}:\d{2})?/
+      regex:
+        /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})(:(\d{2}))?(Z?)([\+\-]{1}\d{2}:\d{2})?/
     },
     {
       key: 'WaybackMachineMementoTimestamp',

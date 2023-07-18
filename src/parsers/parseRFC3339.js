@@ -1,16 +1,18 @@
 const { DateTime } = require('luxon');
-const { checkSecondsRegex, getTimeZonesForThisDateTime } = require('./utils');
+const { getTimeZonesForThisDateTime } = require('./utils');
 
 const parseRFC3339 = (value, options, isDetailed) => {
-  const valueWithoutZ = value.endsWith('Z')
-    ? value.substring(0, value.length - 1)
-    : value;
+  const hasSeconds = /\d{2}:\d{2}:\d{2}/.test(value);
+  const hasZ = /Z$/.test(value);
+  const hasOffset = /[\+-]\d{2}:\d{2}$/.test(value);
 
-  const formatString = `yyyy-MM-dd HH:mm${
-    checkSecondsRegex.test(valueWithoutZ) ? ':ss' : ''
+  const formatString = `yyyy-MM-dd HH:mm${hasSeconds ? ':ss' : ''}${
+    hasZ ? "'Z'" : hasOffset ? 'ZZ' : ''
   }`;
 
-  const formattedTime = DateTime.fromFormat(valueWithoutZ, formatString, { zone: 'utc' });
+  const formattedTime = DateTime.fromFormat(value, formatString, {
+    setZone: hasOffset || hasZ ? 'utc' : false
+  });
 
   return getTimeZonesForThisDateTime(formattedTime, options, isDetailed);
 };
