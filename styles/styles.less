@@ -1,0 +1,44 @@
+.timezone-table {
+  border-collapse: collapse;
+  border: none;
+  table-layout: fixed;
+  width: auto;
+}
+
+th {
+  text-align: left;
+  padding-right: 10px;
+}
+
+td.timezone-value,
+td.timezone-key {
+  text-align: left;
+  word-wrap: break-word;
+  word-break: break-word;
+
+  overflow-wrap: break-word;
+  padding: 0;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  padding: 3px;
+  border-radius: 2px;
+  cursor: copy;
+  color: black;
+  font-size: 1em;
+  text-align: left;
+
+  &:hover {
+    background: #e7e7e7;
+  }
+  &:active {
+    background: #cfcfcf;
+  }
+}
+
+svg.copied-icon {
+  font-size: 12px;
+  color: #919191;
+}
