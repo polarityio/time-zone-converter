@@ -4,14 +4,13 @@
   "acronym": "TZONE",
   "description": "Converts timestamps into any Time Zone",
   "defaultColor": "light-gray",
-  "entityTypes": [],
   "customTypes": [
-    { "key": "ISO-Timezone", "regex": {} },
-    { "key": "ISO-8601", "regex": {} },
-    { "key": "UnixTimestamp", "regex": {} },
-    { "key": "RFC-3339", "regex": {} },
-    { "key": "WaybackMachineMementoTimestamp", "regex": {} },
-    { "key": "NanosecondsSinceBoot", "regex": {} }
+    { "key": "ISO-Timezone", "regex": "\\d{4}-\\d{2}-\\d{2}\\sT\\s\\d{2}:\\d{2}\\s*[A-Z]{3,4}" },
+    { "key": "ISO-8601", "regex": "(\\d{4})(-\\d{2}){2}T(\\d{2}:){2}\\d{2}(\\.\\d{2})?(Z?)([\\+\\-]{1}\\d{2}:\\d{2})?" },
+    { "key": "UnixTimestamp", "regex": "\\b\\d{10}(?!\\w)" },
+    { "key": "RFC-3339", "regex": "(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2})(:(\\d{2}))?(Z?)([\\+\\-]{1}\\d{2}:\\d{2})?" },
+    { "key": "WaybackMachineMementoTimestamp", "regex": "\\d{14}\\[a]" },
+    { "key": "NanosecondsSinceBoot", "regex": "\\d+(?:[ ][n][s])" }
   ],
   "styles": ["./styles/styles.less"],
   "block": {
