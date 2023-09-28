@@ -3,7 +3,6 @@ module.exports = {
   acronym: 'TZONE',
   description: 'Converts timestamps into any Time Zone',
   defaultColor: 'light-gray',
-  entityTypes: [],
   customTypes: [
     {
       key: 'ISO-Timezone',
