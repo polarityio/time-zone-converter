@@ -17,7 +17,9 @@ td.timezone-key {
   word-break: break-word;
 
   overflow-wrap: break-word;
-  padding: 0;
+  padding: 3px 0px;
+  position: relative;
+  border-bottom: 1px dashed #aaa;
 }
 
 .copy-btn {
@@ -38,7 +40,29 @@ td.timezone-key {
   }
 }
 
-svg.copied-icon {
-  font-size: 12px;
-  color: #919191;
+.copy-success-message {
+  position: absolute;
+  top: 25px;
+  right: 0px;
+  background-color: rgb(222, 226, 230);
+  min-width: max-content;
+  padding: 5px;
+  border-radius: 3px;
+  z-index: 999;
+
+  .copy-success-icon {
+    color: #aaa;
+  }
+
+  &.visible {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.25s linear;
+  }
+
+  &.hidden {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 0s 0.25s, opacity 0.25s linear;
+  }
 }

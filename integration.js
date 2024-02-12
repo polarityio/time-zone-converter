@@ -7,13 +7,14 @@ function doLookup(entities, options, cb) {
   let lookupResults = [];
 
   entities.forEach((entity) => {
-    lookupResults.push({
-      entity,
-      data: {
-        summary: createTimezonesFromOptions(entity, options, false),
-        details: createTimezonesFromOptions(entity, options, true)
-      }
-    });
+    const data = createTimezonesFromOptions(entity, options);
+
+    if (data) {
+      lookupResults.push({
+        entity,
+        data
+      });
+    }
   });
 
   cb(null, lookupResults);

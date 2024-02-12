@@ -10,16 +10,6 @@ polarity.export = PolarityComponent.extend({
     this._super(...arguments);
   },
   details: Ember.computed.alias('block.data.details'),
-  type: Ember.computed('block.entity.types', function () {
-    return this.get('block.entity.types')[0];
-  }),
-  time: Ember.computed.alias('details.time'),
-  nanoseconds: Ember.computed.alias('details.nanoseconds'),
-  typeFormatted: Ember.computed('type', function () {
-    const type = this.get('type');
-    const typeFormatted = type.replace('custom.', '');
-    return typeFormatted;
-  }),
   actions: {
     copyData: function (elementId) {
       Ember.run.scheduleOnce('afterRender', this, this.copyElementToClipboard, elementId);

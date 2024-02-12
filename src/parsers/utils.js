@@ -2,17 +2,25 @@ const { map, parseInt } = require('lodash/fp');
 
 const checkSecondsRegex = /\d{2}:\d{2}:\d{2}$/;
 
-const getTimeZonesForThisDateTime = (dateTime, options, useDetailsTimeZones = false) =>
-  map(
-    ({ display: timezoneLabel, value: timezone }) =>
-      useDetailsTimeZones
-        ? {
+const getTimeZonesForThisDateTime = (dateTime, options) => {
+  return {
+    summary: options.summaryTagTimeZones.map(
+      ({ display: timezoneLabel, value: timezone }) => {
+        return dateTime.setZone(timezone).toFormat(options.dateFormatString);
+      }
+    ),
+    details: {
+      timezones: options.detailsTimeZones.map(
+        ({ display: timezoneLabel, value: timezone }) => {
+          return {
             time: dateTime.setZone(timezone).toFormat(options.dateFormatString),
             timezoneLabel
-          }
-        : dateTime.setZone(timezone).toFormat(options.dateFormatString),
-    useDetailsTimeZones ? options.detailsTimeZones : options.summaryTagTimeZones
-  );
+          };
+        }
+      )
+    }
+  };
+};
 
 const convertNanosecondsIntoFormattedString = (nanosecondsString) => {
   let nanoseconds = parseInt(10, nanosecondsString);

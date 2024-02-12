@@ -2,7 +2,7 @@ const { DateTime } = require('luxon');
 const { TIMEZONES } = require('../constants');
 const { checkSecondsRegex, getTimeZonesForThisDateTime } = require('./utils');
 
-const parseISOTimezone = (value, options, isDetailed) => {
+const parseISOTimezone = (value, options) => {
   const timezoneMatch = value.match(/([A-Z]{3,4})$/);
   const timezone = timezoneMatch ? timezoneMatch[0] : 'UTC';
   const timezoneName = TIMEZONES.find((tz) => tz.abbreviation === timezone);
@@ -21,7 +21,9 @@ const parseISOTimezone = (value, options, isDetailed) => {
     zone: timezoneName.value
   });
 
-  return getTimeZonesForThisDateTime(formattedTimeWithZone, options, isDetailed);
+  let data = getTimeZonesForThisDateTime(formattedTimeWithZone, options);
+  data.details.type = 'ISO Timezone';
+  return data;
 };
 
 module.exports = { parseISOTimezone };

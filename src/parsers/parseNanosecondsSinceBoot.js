@@ -1,21 +1,48 @@
 const { DateTime } = require('luxon');
-const { parseInt } = require('lodash/fp');
-const { convertNanosecondsIntoFormattedString } = require('./utils');
+const {
+  convertNanosecondsIntoFormattedString,
+  getTimeZonesForThisDateTime
+} = require('./utils');
+const { getLogger } = require('../logger');
 
-const parseNanosecondsSinceBoot = (value, options, useDetailsTimeZones) => {
-  const nanoseconds = value.match(/(\d+)\s?ns/)[1];
+const parseNanosecondsSinceBoot = (value, options) => {
+  const Logger = getLogger();
 
-  const now = DateTime.now().toUTC();
+  let nanoseconds;
+  const match = value.match(/(\d+)\s?ns/);
 
-  const bootTime = now.minus(parseInt(10, nanoseconds) / 1000);
+  Logger.info({ match }, 'Nanosecond Match');
+  if (Array.isArray(match) && match.length > 0) {
+    nanoseconds = match[1];
+  }
 
-  const formattedNanoseconds = convertNanosecondsIntoFormattedString(nanoseconds);
-  return useDetailsTimeZones
-    ? {
-        time: bootTime.toFormat(options.dateFormatString),
-        nanoseconds: formattedNanoseconds
-      }
-    : [formattedNanoseconds];
+  if (nanoseconds) {
+    Logger.info({ nanoseconds }, 'Nanoseconds');
+
+    const now = DateTime.now().toUTC();
+
+    const bootTime = now.minus(parseInt(nanoseconds, 10) / 1000);
+
+    const formattedNanoseconds = convertNanosecondsIntoFormattedString(nanoseconds);
+
+    Logger.info({ bootTime, formattedNanoseconds }, 'BootTime');
+
+    let data = getTimeZonesForThisDateTime(bootTime, options);
+    data.summary = [formattedNanoseconds];
+    data.details.time = bootTime.toFormat(options.dateFormatString);
+    data.details.type = 'Nanoseconds';
+    data.details.nanoseconds = formattedNanoseconds;
+
+    return data;
+    // return {
+    //   summary: [formattedNanoseconds],
+    //   details: {)
+    //     time: bootTime.toFormat(options.dateFormatString,
+    //     nanoseconds: formattedNanoseconds,
+    //     type: 'Nanoseconds'
+    //   }
+    // };
+  }
 };
 
 module.exports = { parseNanosecondsSinceBoot };
