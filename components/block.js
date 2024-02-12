@@ -28,11 +28,11 @@ polarity.export = PolarityComponent.extend({
       .writeText(text)
       .then(() => {
         this.set(`showCopySuccessCheck.${element}`, true);
-        console.log('Text copied to clipboard');
       })
       .catch((err) => {
-        console.log('Error in copying text: ', err);
-      }).finally(() => {
+        console.error('Error in copying text: ', err);
+      })
+      .finally(() => {
         setTimeout(() => {
           this.set(`showCopySuccessCheck.${element}`, false);
         }, 2000);

@@ -11,6 +11,8 @@
         {{details.nanoseconds}}
       </td>
     </tr>
+  {{/if}}
+  {{#if details.boottime}}
     <tr>
       <td class='timezone-key'>
         Boot Time:
@@ -30,7 +32,7 @@
         {{/if}}
       </td>
     </tr>
-    {{/if}}
+  {{/if}}
     {{#each details.timezones as |timezone|}}
       <tr>
         <td class='timezone-key'>
