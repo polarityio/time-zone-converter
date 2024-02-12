@@ -1,30 +1,30 @@
-<table class='timezone-table'>
-  {{#if (gt details.length 0)}}
+<h1 class="p-title">
+  {{fa-icon icon="clock" fixedWidth=true}} Format: {{details.type}}
+</h1>
+<table class='timezone-table mb-3'>
+  {{#if details.nanoseconds}}
     <tr>
-      <th>
-        {{typeFormatted}}:
-      </th>
-    </tr>
-  {{else}}
-    <tr>
-      <td class='p-0'>
-        No Timezones Selected
+      <td class='timezone-key'>
+        Time Since Boot:
+      </td>
+      <td class='timezone-value'>
+        {{details.nanoseconds}}
       </td>
     </tr>
   {{/if}}
-  {{#if (eq type 'custom.NanosecondsSinceBoot')}}
+  {{#if details.boottime}}
     <tr>
       <td class='timezone-key'>
         Boot Time:
       </td>
       <td class='timezone-value'>
         <button
-          class='copy-btn'
-          title='Copy to Clipboard'
+                class='copy-btn'
+                title='Copy to Clipboard'
           {{action 'copyData' (concat 'time-info-nano-' uniqueIdPrefix)}}
         >
           <div id={{concat 'time-info-nano-' uniqueIdPrefix}}>
-            {{time}}
+            {{details.time}}
           </div>
         </button>
         {{#if (get showCopySuccessCheck (concat 'time-info-nano-' uniqueIdPrefix))}}
@@ -32,45 +32,31 @@
         {{/if}}
       </td>
     </tr>
-    <tr>
-      <td class='timezone-key'>
-        Time Since Boot:
-      </td>
-      <td class='timezone-value'>
-        {{nanoseconds}}
-      </td>
-    </tr>
-  {{else}}
-    {{#with details as |timezones|}}
-      {{#each timezones as |timezone|}}
-        <tr>
-          <td class='timezone-key'>
-            {{timezone.timezoneLabel}}:
-          </td>
-          <td class='timezone-value'>
-            <button
-              class='copy-btn'
-              title='Copy to Clipboard'
-              {{action
-                'copyData'
-                (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)
-              }}
-            >
-              <div id={{concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix}}>
-                {{timezone.time}}
-              </div>
-            </button>
-            {{#if
-              (get
-                showCopySuccessCheck
-                (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)
-              )
-            }}
-              {{fa-icon icon='check' class='copied-icon' fixedWidth=true}}
-            {{/if}}
-          </td>
-        </tr>
-      {{/each}}
-    {{/with}}
   {{/if}}
+    {{#each details.timezones as |timezone|}}
+      <tr>
+        <td class='timezone-key'>
+          {{timezone.timezoneLabel}}:
+        </td>
+        <td class='timezone-value'>
+          <button
+            class='copy-btn'
+            title='Copy to Clipboard'
+            {{action
+              'copyData'
+              (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)
+            }}
+          >
+            <div id={{concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix}}>
+              {{timezone.time}}
+            </div>
+          </button>
+
+          <div class="copy-success-message {{if (get showCopySuccessCheck (concat 'time-info-' timezone.timezoneLabel '-' uniqueIdPrefix)) "visible" "hidden"}}">
+            {{fa-icon icon="check" fixedWidth=true class="copy-success-icon"}}
+            Copied timestamp
+          </div>
+        </td>
+      </tr>
+    {{/each}}
 </table>

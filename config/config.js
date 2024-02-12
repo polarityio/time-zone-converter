@@ -5,29 +5,29 @@ module.exports = {
   defaultColor: 'light-gray',
   customTypes: [
     {
-      key: 'ISO-Timezone',
+      key: 'isoTimezone',
       regex: /\d{4}-\d{2}-\d{2}\sT\s\d{2}:\d{2}\s*[A-Z]{3,4}/
     },
     {
-      key: 'ISO-8601',
+      key: 'iso8601',
       regex: /(\d{4})(-\d{2}){2}T(\d{2}:){2}\d{2}(\.\d{2})?(Z?)([\+\-]{1}\d{2}:\d{2})?/
     },
     {
-      key: 'UnixTimestamp',
+      key: 'unixTimestamp',
       regex: /\b\d{10}(?!\w)/
     },
     {
-      key: 'RFC-3339',
+      key: 'rfc3339',
       regex:
         /(\d{4})-(\d{2})-(\d{2}) (\d{2}):(\d{2})(:(\d{2}))?(Z?)([\+\-]{1}\d{2}:\d{2})?/
     },
     {
-      key: 'WaybackMachineMementoTimestamp',
+      key: 'waybackMachineMementoTimestamp',
       regex: /\d{14}\[a]/
     },
     {
-      key: 'NanosecondsSinceBoot',
-      regex: /\d+(?:[ ][n][s])/
+      key: 'nanosecondsSinceBoot',
+      regex: /\d{1,64}\s?ns/
     }
   ],
   styles: ['./styles/styles.less'],
