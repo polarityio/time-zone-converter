@@ -7,19 +7,30 @@ const {
   parseNanosecondsSinceBoot
 } = require('./parsers');
 
+const customTypes = new Set([
+  'custom.isoTimezone',
+  'custom.iso8601',
+  'custom.unixTimestamp',
+  'custom.rfc3339',
+  'custom.waybackMachineMementoTimestamp',
+  'custom.nanosecondsSinceBoot'
+]);
+
 const TYPE_BY_DATE_FORMAT_FUNC = {
-  'custom.WaybackMachineMementoTimestamp': parseWaybackMachineMemento,
-  'custom.UnixTimestamp': parseUnix,
-  'custom.ISO-Timezone': parseISOTimezone,
-  'custom.ISO-8601': parseISO8601,
-  'custom.RFC-3339': parseRFC3339,
-  'custom.NanosecondsSinceBoot': parseNanosecondsSinceBoot
+  'custom.waybackMachineMementoTimestamp': parseWaybackMachineMemento,
+  'custom.unixTimestamp': parseUnix,
+  'custom.isoTimezone': parseISOTimezone,
+  'custom.iso8601': parseISO8601,
+  'custom.rfc3339': parseRFC3339,
+  'custom.nanosecondsSinceBoot': parseNanosecondsSinceBoot
 };
 
 const createTimezonesFromOptions = (entity, options, useDetails) => {
-  const type = entity.types[0];
+  const type = entity.types.find((type) => customTypes.has(type));
 
-  return TYPE_BY_DATE_FORMAT_FUNC[type](entity.value, options, useDetails);
+  if (type) {
+    return TYPE_BY_DATE_FORMAT_FUNC[type](entity.value, options, useDetails);
+  }
 };
 
 module.exports = {
